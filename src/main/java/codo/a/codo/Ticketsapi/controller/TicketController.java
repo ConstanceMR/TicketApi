@@ -26,12 +26,11 @@ public class TicketController {
         @GetMapping("/flights")
         public List<FlightDto> getAllFlights(){
             return flightClient.getAllFlights();
-
         }
 
-        @GetMapping("/flights/{id}")
-        public Optional<Optional<FlightDto>> flightById(@PathVariable Long id) {
-            return Optional.ofNullable(flightClient.getFlightById(id));
+        @GetMapping("/flight")
+        public Optional<Optional<FlightDto>> getFlightById(@RequestParam Long flightId) {
+            return Optional.ofNullable(flightClient.getFlightById(flightId));
         }
 
         @PostMapping("/add")
@@ -40,13 +39,13 @@ public class TicketController {
         }
 
         @PutMapping("/update")
-        public Ticket update(@RequestBody Ticket ticket) {
+        public Ticket updateTicket(@RequestBody Ticket ticket) {
             return ticketService.updateTicket(ticket);
         }
 
-        @DeleteMapping("delete/{id}")
-        public void delete(@PathVariable Long id) {
-            ticketService.deleteTicket(id);
+        @DeleteMapping("/delete")
+        public void deleteTicket(@RequestParam Long id) {
+            ticketService.deleteTicketById(id);
         }
     }
 

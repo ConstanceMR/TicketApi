@@ -21,28 +21,24 @@ public class TicketService {
     }
 
     public Ticket addTicket (Ticket ticket, @RequestParam Long flightId){
-        System.out.println(flightId);
+        System.out.println(ticket.getId());
         FlightDto flight = flightClient.getFlightById(flightId).orElseThrow(() -> new RuntimeException("flightId not found"));
         ticket.setFlight(flight);
        tickets.add(ticket);
         return ticket;
     }
 
-    public Ticket updateTicket(Ticket TicketUpdate) {
-        Long TicketId = TicketUpdate.getId();
-        Ticket Ticket =tickets.stream()
-                .filter(ticket -> ticket.getId().equals(TicketId))
-                .findFirst().orElseThrow(()-> new RuntimeException("TicketId not found"));
-        Ticket.setId(TicketId);
-        Ticket.setFlight(TicketUpdate.getFlight());
-        Ticket.setPassengerName(TicketUpdate.getPassengerName());
-        Ticket.setPassengerEmail(TicketUpdate.getPassengerEmail());
-        Ticket.setPassengerPassport(TicketUpdate.getPassengerPassport());
-        return Ticket;
+    public Ticket updateTicket(Ticket ticket) {
+
+        ticket.setFlight(ticket.getFlight());
+        ticket.setPassengerName(ticket.getPassengerName());
+        ticket.setPassengerEmail(ticket.getPassengerEmail());
+        ticket.setPassengerPassport(ticket.getPassengerPassport());
+        return ticket;
     }
 
-    public void deleteTicket(Long ticketId)  {
-        tickets.removeIf(ticket -> ticket.getId().equals(ticketId));
+    public void deleteTicketById(Long id)  {
+        tickets.removeIf(ticket -> ticket.getId().equals(id));
     }
 
 }
